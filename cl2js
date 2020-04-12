@@ -47,7 +47,7 @@ then
   sbclrun "$root/cl2js.lisp" "$script" "$@";
 elif [ "$CCL" = "$lisp" ];
 then
-  # argv: (script ...)
+  # argv: (ccl -l cl2js.lisp -- script ...)
   cclrun "$root/cl2js.lisp" -- "$script" "$@";
 else
   echo "Unsupported Common Lisp implementation" >&2;
