@@ -12,10 +12,10 @@
 
 (defun main ()
   (prog* ((args (argument-vector))
-          #+sbcl (path (first (rest args)))
-          #+ccl  (path (nth 4 args))
-          #+abcl (path (first args))
-         )
+          #+sbcl (args (rest args))
+          #+ccl  (args (rest (rest (rest (rest args)))))
+          ; In ABCL, no loading script in arguments.
+          (path (first args)))
     (when (null path)
       (perror "No input file")
       (quit-with-status 1))
