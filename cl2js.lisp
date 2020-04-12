@@ -4,7 +4,7 @@
 ; Check whether ParenScript is available.
 (handler-case (cl:require "parenscript")
   (error ()
-    (perror "No ParenScript on the system")
+    (perror "No Parenscript on the system")
     (quit-with-status 1)))
 
 (in-package :cl)
