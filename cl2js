@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Constant
+SBCL="sbcl"
+CCL="ccl"
+
+# Check whether SBCL is available.
+if ! command -v sbclrun 2>/dev/null 1>&2;
+then
+  echo "sbclrun is not available" >&2;
+  exit 1;
+fi
+
+# Check whether Clozure is available. (Optional)
+if ! command -v cclrun 2>/dev/null 1>&2;
+then
+  echo "cclrun is not available" >&2;
+fi
+
+root=$(dirname "$0");
+
+# Check whether the Lisp script is available.
+lisp=$1;
+
+if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ];
+then
+  # Consume an argument.
+  shift;
+else
+  lisp="$SBCL"
+fi
+
+script=$1;
+
+if [ -z "$script" ] || ! [ -f "$script" ];
+then
+  echo "Not a valid Lisp script" >&2;
+  exit 1;
+fi
+
+# Consume an argument.
+shift;
+
+if [ "$SBCL" = "$lisp" ];
+then
+  # argv: (sbcl script ...)
+  sbclrun "$root/cl2js.lisp" "$script" "$@";
+elif [ "$CCL" = "$lisp" ];
+then
+  # argv: (script ...)
+  cclrun "$root/cl2js.lisp" -- "$script" "$@";
+else
+  echo "Unsupported Common Lisp implementation" >&2;
+  exit 1;
+fi
