@@ -5,7 +5,6 @@
   (:documentation
     "Yet another utilities for Common Lisp")
   (:export :*safe-mode*
-           :boolean-alias
            :definedp
            :nullable
            :average
@@ -21,12 +20,6 @@
 
 (defvar *safe-mode* nil
   "Validate data at runtime")
-
-(defun boolean-alias ()
-  (declare (ftype (function () symbol) boolean-alias))
-  "Alias as boolean constants"
-  (defconstant true t "Alias to t")
-  (defconstant false nil "Alias to nil"))
 
 (defmacro definedp (obj)
   "Check whether obj is defined."

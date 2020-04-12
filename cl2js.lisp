@@ -7,15 +7,14 @@
     (perror "No Parenscript on the system")
     (quit-with-status 1)))
 
-(in-package :cl)
-
-(use-package :cl-yautils)
+; (use-package :cl-yautils)
 (use-package :parenscript)
 
 (defun main ()
   (prog* ((args (argument-vector))
           #+sbcl (path (first (rest args)))
-          #+ccl (path (nth 4 args))
+          #+ccl  (path (nth 4 args))
+          #+abcl (path (first args))
          )
     (when (null path)
       (perror "No input file")

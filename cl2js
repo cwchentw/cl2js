@@ -3,6 +3,7 @@
 # Constant
 SBCL="sbcl"
 CCL="ccl"
+ABCL="abcl"
 
 # Check whether SBCL is available.
 if ! command -v sbclrun 2>/dev/null 1>&2;
@@ -17,12 +18,18 @@ then
   echo "cclrun is not available" >&2;
 fi
 
+# Check whether Armed Bear CL is available. (Optional)
+if ! command -v abclrun 2>/dev/null 1>&2;
+then
+  echo "abclrun is not available" >&2;
+fi
+
 root=$(dirname "$0");
 
 # Check whether the Lisp script is available.
 lisp=$1;
 
-if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ];
+if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ] || [ "$ABCL" = "$lisp" ];
 then
   # Consume an argument.
   shift;
@@ -49,6 +56,10 @@ elif [ "$CCL" = "$lisp" ];
 then
   # argv: (ccl -l cl2js.lisp -- script ...)
   cclrun "$root/cl2js.lisp" -- "$script" "$@";
+elif [ "$ABCL" = "$lisp" ];
+then
+  # argv: (cl2js.lisp script ...)
+  abclrun "$root/cl2js.lisp" "$script" "$@";
 else
   echo "Unsupported Common Lisp implementation" >&2;
   exit 1;
