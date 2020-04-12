@@ -24,7 +24,7 @@ Keep the scripts in the repo *as-is* for normal use.
 
 Assume *source.lisp* is a valid Parenscript source.
 
-Compile with SBCL:
+Compile it with SBCL:
 
 ```
 $ cl2js source.lisp > output.js
@@ -36,13 +36,13 @@ or
 $ cl2js sbcl source.lisp > output.js
 ```
 
-Alternatively, compile with Clozure CL:
+Alternatively, compile it with Clozure CL:
 
 ```
 $ cl2js ccl source.lisp > output.js
 ```
 
-Alternatively, compile with ABCL:
+Alternatively, compile it with ABCL:
 
 ```
 $ cl2js abcl source.lisp > output.js
