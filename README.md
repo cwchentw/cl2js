@@ -4,12 +4,12 @@ An utility command to convert Common Lisp to JavaScript with the power of Parens
 
 ## System Requirements
 
-* Either
+* Either Common Lisp implementation
   * [SBCL](http://www.sbcl.org/) (default)
   * [Clozure CL](https://ccl.clozure.com/)
   * [ABCL](https://common-lisp.net/project/armedbear/)
 * [Parenscript](https://common-lisp.net/project/parenscript/)
-* Wrappers
+* Wrapper for specific Common Lisp implementation
   * [sbclrun](https://github.com/cwchentw/cl-yautils/blob/master/scripts/sbclrun) (default)
   * [cclrun](https://github.com/cwchentw/cl-yautils/blob/master/scripts/cclrun)
   * [abclrun](https://github.com/cwchentw/cl-yautils/blob/master/scripts/abclrun)
@@ -50,11 +50,10 @@ $ cl2js abcl source.lisp > output.js
 
 ## Note
 
-We copy *cl-yautils.lisp* [here](https://github.com/cwchentw/cl-yautils).  In addition, wrappers used by `cl2js` is in the same repo as well.
+We copy *cl-yautils.lisp* and wrappers [here](https://github.com/cwchentw/cl-yautils).
 
 ## Copyright
 
 Copyright (c) 2020 Michael Chen.
 
 Licensed under MIT.
-
