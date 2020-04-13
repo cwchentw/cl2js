@@ -11,11 +11,8 @@
 (use-package :parenscript)
 
 (defun main ()
-  (prog* ((args (argument-vector))
-          #+sbcl (args (rest args))
-          #+ccl  (args (rest (rest (rest (rest args)))))
-          ; In ABCL, no loading script in arguments.
-          (path (first args)))
+  (prog* ((args (argument))
+          (path (first (rest args))))
     (when (null path)
       (perror "No input file")
       (quit-with-status 1))
