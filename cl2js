@@ -10,30 +10,13 @@ root=$(dirname "$0");
 # Check whether the Lisp script is available.
 lisp=$1;
 
-if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ] || [ "$ABCL" = "$lisp" ];
+if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ];
 then
   # Consume an argument.
   shift;
 else
   lisp="$SBCL"
 fi
-
-script=$1;
-
-if [ -z "$script" ];
-then
-  echo "No Lisp script" >&2
-  exit 1;
-fi
-
-if ! [ -f "$script" ];
-then
-  echo "Not a valid Lisp script" >&2;
-  exit 1;
-fi
-
-# Consume an argument.
-shift;
 
 if [ "$SBCL" = "$lisp" ];
 then
@@ -45,7 +28,7 @@ then
   fi
 
   # argv: (sbcl script ...)
-  sbclrun "$root/cl2js.lisp" "$script" "$@";
+  sbclrun "$root/cl2js.lisp" "$@";
 elif [ "$CCL" = "$lisp" ];
 then
   # Check whether Clozure CL and its wrapper is available.
@@ -56,19 +39,5 @@ then
   fi
 
   # argv: (ccl -l cl2js.lisp -- script ...)
-  cclrun "$root/cl2js.lisp" -- "$script" "$@";
-elif [ "$ABCL" = "$lisp" ];
-then
-  # Check whether Armed Bear CL and its wrapper is available.
-  if ! command -v abclrun 2>/dev/null 1>&2;
-  then
-    echo "No abclrun on the system" >&2;
-    exit 1;
-  fi
-
-  # argv: (cl2js.lisp script ...)
-  abclrun "$root/cl2js.lisp" "$script" "$@";
-else
-  echo "Unsupported Common Lisp implementation" >&2;
-  exit 1;
+  cclrun "$root/cl2js.lisp" -- "$@";
 fi
