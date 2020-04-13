@@ -20,7 +20,13 @@ fi
 
 script=$1;
 
-if [ -z "$script" ] || ! [ -f "$script" ];
+if [ -z "$script" ];
+then
+  echo "No Lisp script" >&2
+  exit 1;
+fi
+
+if ! [ -f "$script" ];
 then
   echo "Not a valid Lisp script" >&2;
   exit 1;
