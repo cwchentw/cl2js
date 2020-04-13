@@ -1,4 +1,4 @@
-; var = ["foo", "bar", "baz", "qux"];
+; var arr = ["foo", "bar", "baz", "qux"];
 (defvar arr (array "foo" "bar" "baz" "qux"))
 
 ; arr.forEach(function (elem) {
