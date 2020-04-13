@@ -1,25 +1,29 @@
 (load (merge-pathnames "cl-yautils.lisp" *load-pathname*))
-(in-package :cl-yautils)
+
+(in-package :cl)
+
+; Due to name collision between cl-yautils and parenscript,
+; we don't use :cl-yautils package.
+(rename-package :cl-yautils :yau)
 
 ; Check whether ParenScript is available.
-(handler-case (cl:require "parenscript")
+(handler-case (require "parenscript")
   (error ()
-    (perror "No Parenscript on the system")
-    (quit-with-status 1)))
+    (yau:perror "No Parenscript on the system")
+    (yau:quit-with-status 1)))
 
-; (use-package :cl-yautils)
 (use-package :parenscript)
 
 ; Generate newer JavaScript code.
 (setq *js-target-version* "1.8.5")
 
 (defun main ()
-  (prog* ((args (argument))
+  (prog* ((args (yau:argument))
           (path (first (rest args))))
     (when (null path)
-      (perror "No input file")
-      (quit-with-status 1))
+      (yau:perror "No input file")
+      (yau:quit-with-status 1))
     (princ (ps-compile-file path)))
-  (quit-with-status))
+  (yau:quit-with-status))
 
 (main)

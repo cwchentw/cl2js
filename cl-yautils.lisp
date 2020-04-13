@@ -5,7 +5,7 @@
   (:documentation
     "Yet another utilities for Common Lisp")
   (:export :*safe-mode*
-           :definedp
+           :defined
            :nullable
            :average
            :random-integer
@@ -22,7 +22,7 @@
 (defvar *safe-mode* nil
   "Validate data at runtime")
 
-(defmacro definedp (obj)
+(defmacro defined (obj)
   "Check whether obj is defined."
   `(and (ignore-errors ,obj) t))
 
