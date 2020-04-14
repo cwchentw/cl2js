@@ -12,19 +12,40 @@
 
 ; Due to name collision between :cl of ABCL and :parenscript,
 ; we set current package :parenscript.
-(in-package :parenscript)
+;(in-package :parenscript)
+
+(defun ps2js (f &key (comment nil))
+  (in-package :ps)
+  (do
+   ((form (read f nil) (read f nil)))
+   ((not form))
+    (when comment
+      (format t  "/* ~A */~%" form))
+    (format t "~A~%" (ps:ps* form))))
 
 ; Generate newer JavaScript code.
-(setq *js-target-version* "1.8.5")
+(setq parenscript:*js-target-version* "1.8.5")
 
 (defun main ()
-  (prog* ((args (yau:argument))
-          (path (first (rest args))))
+  (prog* ((args (yau:argument-vector))
+          #+(or sbcl ccl) (path (first (rest args)))
+          #+abcl (path (first args))
+         )
     (when (null path)
       (yau:perror "No input file")
       (yau:quit-with-status 1))
-    (princ (ps-compile-file path)))
+    (with-open-file (f path)
+      (handler-bind
+        ((error
+           (lambda (e) 
+             (format *error-output* "~A~%" e)
+             (yau:quit-with-status 1))))
+           (ps2js f))))
   (finish-output)
   (yau:quit-with-status))
 
-(main)
+#+(or sbcl ccl) (defvar +program+ 
+#+(or sbcl ccl)   (if (equal :windows (yau:platform)) "cl2js.exe" "cl2js"))
+#+(or sbcl ccl) (yau:compile-program +program+ (lambda () (main)))
+
+#+abcl (main)
