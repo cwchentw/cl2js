@@ -11,8 +11,6 @@ A utility command to convert Common Lisp to JavaScript with the power of Parensc
   * [Clozure CL](https://ccl.clozure.com/)
   * [Armed Bear CL](https://common-lisp.net/project/armedbear/)
 * [Parenscript](https://common-lisp.net/project/parenscript/)
-* (Optional) Wrapper for Armed Bear CL
-  * [abclrun](https://github.com/cwchentw/cl-yautils/blob/master/scripts/abclrun)
 
 Our *build* script will download and install Parenscript automatically. Hence, you don't need to manage dependency by yourself.
 
@@ -42,7 +40,13 @@ $ ./build ccl
 
 Pending.
 
+### Java Platform
+
+Alternatively, you may run `jcl2js` *as-is*.
+
 ## Usage
+
+### `cl2js`
 
 Assume *source.lisp* is a valid Parenscript source.
 
@@ -64,7 +68,23 @@ Run *source.lisp* with Node.js on-the-fly:
 $ cl2js source.lisp | node
 ```
 
+### `jcl2js`
+
+On first run, `jcl2js` will install Parenscript automatically for you:
+
+```
+$ jcl2js
+```
+
+Later, run `jcl2js` to compile *source.lisp*:
+
+```
+$ jcl2js source.lisp > output.js
+```
+
 ## Note
+
+The version of Armed Bear CL bundled in this repo is 1.6
 
 We copy *quicklisp.lisp* [here](https://www.quicklisp.org/beta/).
 

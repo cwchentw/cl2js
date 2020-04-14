@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Detect whether Java is available on your system.
+if ! command -v java -version 2>/dev/null 1>&2;
+then
+  echo "No Java on the system" >&2;
+  exit 1;
+fi
+
+# Locate the path of the script itself.
+root=$(dirname "$0");
+
+if ! [ -d "$root/quicklisp" ];
+then
+  java -jar "$root/abcl.jar" \
+       --eval "(require :abcl-contrib)" \
+       --load quicklisp.lisp \
+       --eval "(load \"quicklisp.lisp\")" \
+       --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+       --eval "(ql:quickload \"parenscript\")" \
+       --eval "(quit)"
+  echo "Restart $0"
+  exit 0
+else
+  java -jar "$root/abcl.jar" \
+     --noinform \
+     --eval "(require :abcl-contrib)" \
+     --load ./quicklisp/setup.lisp \
+     --load "$root/cl2js.lisp" "$@";
+fi
