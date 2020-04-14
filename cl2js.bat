@@ -31,7 +31,8 @@ if "" neq "%arg%" (
 
 rem Run cl2js.lisp with SBCL.
 if %SBCL% == "%lisp%" (
-    sbclrun %rootdir%cl2js.lisp %args%
+    rem Fix sbclrun later.
+    sbcl --noinform --load %rootdir%cl2js.lisp %args%
     rem exit /B 0
 )
 
