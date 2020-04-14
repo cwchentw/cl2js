@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if ! command -v node --version 2>/dev/null 1>&2;
+then
+  echo "No Node.js on the system" >&2;
+  exit 1;
+fi
+
+CL2JS=./cl2js
+
+for script in examples/*;
+do
+  echo "Test $script ..."
+  $CL2JS "$script" | node >/dev/null || (
+    echo "Failed while testing $script";
+    exit 1;
+  )
+done
