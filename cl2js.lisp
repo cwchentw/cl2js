@@ -8,10 +8,6 @@
     (perror "No Parenscript on the system")
     (quit-with-status 1)))
 
-; Due to name collision between :cl of ABCL and :parenscript,
-; we set current package :parenscript.
-;(in-package :parenscript)
-
 (defun ps2js (f &key (comment nil))
   (in-package :ps)
   (do
@@ -37,6 +33,7 @@
            (lambda (e) 
              (format *error-output* "~A~%" e)
              (quit-with-status 1))))
+           ; We just disable verbose mode now.
            (ps2js f))))
   (finish-output)
   (quit-with-status))
