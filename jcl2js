@@ -14,9 +14,9 @@ if ! [ -d "$root/quicklisp" ];
 then
   java -jar "$root/abcl.jar" \
        --eval "(require :abcl-contrib)" \
-       --load quicklisp.lisp \
-       --eval "(load \"quicklisp.lisp\")" \
-       --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+       --load "$root/quicklisp.lisp" \
+       --eval "(load \"$root/quicklisp.lisp\")" \
+       --eval "(quicklisp-quickstart:install :path \"$root/quicklisp\")" \
        --eval "(ql:quickload \"parenscript\")" \
        --eval "(quit)"
   echo "Restart $0"
@@ -25,6 +25,6 @@ else
   java -jar "$root/abcl.jar" \
      --noinform \
      --eval "(require :abcl-contrib)" \
-     --load ./quicklisp/setup.lisp \
+     --load "$root/quicklisp/setup.lisp" \
      --load "$root/cl2js.lisp" "$@";
 fi
