@@ -26,13 +26,12 @@
 
 (defun main ()
   (prog* ((args (argument-vector))
-          #+(or sbcl ccl) (path (first (rest args)))
-          #+abcl          (path (first args))
+          #+(or sbcl ccl) (args (rest args))
          )
-    (when (null path)
+    (when (null (first args))
       (perror "No input file")
       (quit-with-status 1))
-    (with-open-file (f path)
+    (with-open-file (f (first args))
       (handler-bind
         ((error
            (lambda (e) 
