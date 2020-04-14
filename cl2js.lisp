@@ -27,7 +27,7 @@
 (defun main ()
   (prog* ((args (argument-vector))
           #+(or sbcl ccl) (path (first (rest args)))
-          #+abcl (path (first args))
+          #+abcl          (path (first args))
          )
     (when (null path)
       (perror "No input file")
@@ -41,9 +41,5 @@
            (ps2js f))))
   (finish-output)
   (quit-with-status))
-
-#+(or sbcl ccl) (defvar +program+ 
-#+(or sbcl ccl)   (if (equal :windows (platform)) "cl2js.exe" "cl2js"))
-#+(or sbcl ccl) (compile-program +program+ (lambda () (main)))
 
 #+abcl (main)

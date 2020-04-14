@@ -1,0 +1,72 @@
+#!/bin/sh
+
+SBCL="sbcl"
+CCL="ccl"
+
+lisp=$1
+
+if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ];
+then
+  shift;
+else
+  lisp="$SBCL"
+fi
+
+if [ "$SBCL" = "$lisp" ];
+then
+  sbcl --load quicklisp.lisp \
+       --eval "(load \"quicklisp.lisp\")" \
+       --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+       --eval "(ql:quickload \"parenscript\")" \
+       --load cl2js.lisp \
+       --eval "(compile-program \"cl2js\" #'main)"
+  exit 0;
+fi
+
+if [ "$CCL" = "$lisp" ];
+then
+  if [ "Linux" = $(uname) ];
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      ccl="lx86cl64";
+    else
+      ccl="lx86cl";
+    fi
+  elif [ "Darwin" = $(uname) ];
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      ccl="dx86cl64";
+    else
+      ccl="dx86cl";
+    fi
+  elif [ "FreeBSD" = $(uname) ];  # Untested
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      ccl="fx86cl64";
+    else
+      ccl="fx86cl";
+    fi
+  elif [ "SunOS" = $(uname) ];  # Untested
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      ccl="sx86cl64";
+    else
+      ccl="sx86cl";
+    fi
+  else
+    echo "Unsupported platform" >&2;
+    exit 1;
+  fi
+
+  "$ccl" --load quicklisp.lisp \
+       --eval "(load \"quicklisp.lisp\")" \
+       --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+       --eval "(ql:quickload \"parenscript\")" \
+       --load cl2js.lisp \
+       --eval "(compile-program \"cl2js\" #'main)"
+  exit 0;
+fi
