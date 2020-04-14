@@ -4,14 +4,14 @@
 ; we don't use :cl-yautils package.
 (rename-package :cl-yautils :yau)
 
-; Check whether ParenScript is available.
+; Load Parenscript if it exists.
 (handler-case (require "parenscript")
   (error ()
     (yau:perror "No Parenscript on the system")
     (yau:quit-with-status 1)))
 
 ; Due to name collision between :cl of ABCL and :parenscript,
-; we use :parenscript.
+; we set current package :parenscript.
 (in-package :parenscript)
 
 ; Generate newer JavaScript code.
