@@ -1,24 +1,13 @@
-; switch ((new Date()).getDay()) {
-; case 0:
-; case 6:
-;     console.log("Weekend");
-;     break;
-; case 5:
-;     console.log("Thank God. It's Friday!");
-;     break;
-; case 3:
-;     console.log("Hump day");
-;     break;
-; default:
-;     console.log("Week");
-; }
+(defun write-line (text)
+  ((getprop console 'log) text))
+
 (switch ((getprop (new (-Date)) 'get-day))
-  (0 nil)
-  (6 ((getprop console 'log) "Weekend")
+  (0 nil)  ; Fallthrough
+  (6 (write-line "Weekend")
        break)
-  (5 ((getprop console 'log) "Thank God. It's Friday!")
+  (5 (write-line "Thank God. It's Friday!")
        break)
-  (3 ((getprop console 'log) "Hump day")
+  (3 (write-line "Hump day")
        break)
   (default
-     ((getprop console 'log) "Week")))
+     (write-line "Week")))
