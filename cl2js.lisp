@@ -1,8 +1,6 @@
 (load (merge-pathnames "cl-yautils.lisp" *load-pathname*))
 
-(in-package :cl)
-
-; Due to name collision between cl-yautils and parenscript,
+; Due to name collision between :cl-yautils and :parenscript,
 ; we don't use :cl-yautils package.
 (rename-package :cl-yautils :yau)
 
@@ -12,7 +10,9 @@
     (yau:perror "No Parenscript on the system")
     (yau:quit-with-status 1)))
 
-(use-package :parenscript)
+; Due to name collision between :cl of ABCL and :parenscript,
+; we use :parenscript.
+(in-package :parenscript)
 
 ; Generate newer JavaScript code.
 (setq *js-target-version* "1.8.5")

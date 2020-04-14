@@ -10,7 +10,7 @@ root=$(dirname "$0");
 # Check whether the Lisp script is available.
 lisp=$1;
 
-if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ];
+if [ "$SBCL" = "$lisp" ] || [ "$CCL" = "$lisp" ] || [ "$ABCL" = "$lisp" ];
 then
   # Consume an argument.
   shift;
@@ -27,7 +27,6 @@ then
     exit 1;
   fi
 
-  # argv: (sbcl script ...)
   sbclrun "$root/cl2js.lisp" "$@";
 elif [ "$CCL" = "$lisp" ];
 then
@@ -38,6 +37,15 @@ then
     exit 1;
   fi
 
-  # argv: (ccl -l cl2js.lisp -- script ...)
   cclrun "$root/cl2js.lisp" -- "$@";
+elif [ "$ABCL" = "$lisp" ];
+then
+  # Check whether ABCL and its wrapper is available.
+  if ! command -v abclrun 2>/dev/null 1>&2;
+  then
+    echo "No abclrun on the system" >&2;
+    exit 1;
+  fi
+
+  abclrun "$root/cl2js.lisp" -- "$@";
 fi
