@@ -6,13 +6,36 @@ then
   exit 1;
 fi
 
+TEST_SCRIPT=examples/helloworld.lisp
+
+if ! command -v sbclrun cl2js.lisp "$TEST_SCRIPT" 2>/dev/null 1>&2;
+then
+  echo "No SBCL or its wrapper on the system" >&2;
+  exit 1;
+fi
+
+if ! command -v cclrun cl2js.lisp "$TEST_SCRIPT" 2>/dev/null 1>&2;
+then
+  echo "No Clozure CL or its wrapper on the system" >&2;
+  exit 1;
+fi
+
+if ! command -v abclrun cl2js.lisp "$TEST_SCRIPT" 2>/dev/null 1>&2;
+then
+  echo "No Armed Bear CL or its wrapper on the system" >&2;
+  exit 1;
+fi
+
 CL2JS=./cl2js
 
-for script in examples/*;
+for lisp in sbcl ccl abcl;
 do
-  echo "Test $script ..."
-  $CL2JS "$script" | node >/dev/null || (
-    echo "Failed while testing $script";
-    exit 1;
-  )
+  for script in examples/*;
+  do
+    echo "Test $script with $lisp ..."
+    $CL2JS "$lisp" "$script" | node >/dev/null || (
+      echo "Failed while testing $script with $lisp";
+      exit 1;
+    )
+  done
 done
