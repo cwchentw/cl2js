@@ -24,6 +24,7 @@
       (yau:perror "No input file")
       (yau:quit-with-status 1))
     (princ (ps-compile-file path)))
+  (finish-output)
   (yau:quit-with-status))
 
 (main)
