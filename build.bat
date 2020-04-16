@@ -14,7 +14,6 @@ goto compile_with_sbcl
 
 :compile_with_sbcl
 sbcl --load quicklisp.lisp ^
-     --eval "(load \"quicklisp.lisp\")" ^
      --eval "(quicklisp-quickstart:install :path \"quicklisp\")" ^
      --eval "(ql:quickload \"parenscript\")" ^
      --load cl2js.lisp ^
@@ -26,7 +25,6 @@ rem Set CCL according to hardware archtecture.
 if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (set ccl=wx86cl64.exe) else (set ccl=wx86cl.exe)
 
 %ccl% --load quicklisp.lisp ^
-      --eval "(load \"quicklisp.lisp\")" ^
       --eval "(quicklisp-quickstart:install :path \"quicklisp\")" ^
       --eval "(ql:quickload \"parenscript\")" ^
       --load cl2js.lisp ^
