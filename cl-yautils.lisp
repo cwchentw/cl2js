@@ -7,6 +7,7 @@
   (:export :*safe-mode*
            :defined
            :nullable
+           :while
            :average
            :random-integer
            :puts
@@ -14,7 +15,7 @@
            :quit-with-status
            :compile-program
            :argument-vector
-           :argument
+           :argument-script
            :platform))
 
 (in-package :cl-yautils)
@@ -29,6 +30,12 @@
 (deftype nullable (type)
   "Define nullable type"
   `(or null ,type))
+
+(defmacro while (test &body body)
+  `(loop
+      (when (not ,test)
+        (return))
+      ,@body))
 
 (defun average (lst)
   (declare (ftype (function (list) number) average))
@@ -114,9 +121,9 @@
   #-(or sbcl ccl clisp abcl ecl)
     (error "Unsupported Common Lisp implementation"))
 
-(defun argument ()
-  (declare (ftype (function () list) argument))
-  "Processed command-line argument(s)"
+(defun argument-script ()
+  (declare (ftype (function () list) argument-vector))
+  "Processed command-line argument(s) in scripting mode"
   (let* ((args (argument-vector))
          #+sbcl   (args (rest args))
          #+ccl    (args (rest (rest (rest (rest args)))))
