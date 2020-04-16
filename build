@@ -15,7 +15,6 @@ fi
 if [ "$SBCL" = "$lisp" ];
 then
   sbcl --load quicklisp.lisp \
-       --eval "(load \"quicklisp.lisp\")" \
        --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
        --eval "(ql:quickload \"parenscript\")" \
        --load cl2js.lisp \
@@ -63,10 +62,9 @@ then
   fi
 
   "$ccl" --load quicklisp.lisp \
-       --eval "(load \"quicklisp.lisp\")" \
-       --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
-       --eval "(ql:quickload \"parenscript\")" \
-       --load cl2js.lisp \
-       --eval "(compile-program \"cl2js\" #'main)"
+         --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+         --eval "(ql:quickload \"parenscript\")" \
+         --load cl2js.lisp \
+         --eval "(compile-program \"cl2js\" #'main)"
   exit 0;
 fi
