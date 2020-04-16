@@ -9,7 +9,7 @@ java -version >nul 2>&1 || (
 rem Get the root path of current batch script.
 set root=%~dp0
 
-if not exist "%rootdir%quicklisp\" goto install_parenscript
+if not exist "%root%quicklisp" goto install_parenscript
 
 goto run_parenscript
 

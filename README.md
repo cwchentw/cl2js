@@ -12,7 +12,7 @@ A utility command to convert Common Lisp to JavaScript with the power of Parensc
   * [Armed Bear CL](https://common-lisp.net/project/armedbear/)
 * [Parenscript](https://common-lisp.net/project/parenscript/)
 
-Our *build* script will download and install Parenscript automatically. Hence, you don't need to manage dependency by yourself.
+Our *build* script for Unix and *build.bat* for Windows script will download and install Parenscript automatically. Hence, you don't need to manage dependency by yourself.
 
 ## Build
 
@@ -38,15 +38,33 @@ $ ./build ccl
 
 ### Windows
 
-Pending.
+Compile `cl2js.exe` with SBCL:
+
+```
+$ .\build.bat
+```
+
+or
+
+```
+$ .\build.bat sbcl
+```
+
+Alternatively, compile `cl2js.exe` with Clozure CL:
+
+```
+$ .\build.exe ccl
+```
 
 ### Java Platform
 
-Alternatively, you may run `jcl2js` *as-is*.
+Alternatively, you may run `jcl2js` on Unix or `jcl2js.bat` on Windows *as-is*.
 
 ## Usage
 
 ### `cl2js`
+
+*Note: It's cl2js.exe on Windows.*
 
 Assume *source.lisp* is a valid Parenscript source.
 
@@ -69,6 +87,8 @@ $ cl2js source.lisp | node
 ```
 
 ### `jcl2js`
+
+*Note: It's jcl2js.bat on Windows.*
 
 On first run, `jcl2js` will install Parenscript automatically for you:
 
