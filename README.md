@@ -36,6 +36,8 @@ Alternatively, compile `cl2js` with Clozure CL:
 $ ./build ccl
 ```
 
+Copy `cl2js` to a valid path to use it.
+
 ### Windows
 
 Compile `cl2js.exe` with SBCL:
@@ -56,9 +58,13 @@ Alternatively, compile `cl2js.exe` with Clozure CL:
 $ .\build.exe ccl
 ```
 
+Copy `cl2js.exe` to a valid path to use it.
+
 ### Java Platform
 
 Alternatively, you may run `jcl2js` on Unix or `jcl2js.bat` on Windows *as-is*.
+
+To use `jcl2js`, add the local path of this repo to **PATH** variable.
 
 ## Usage
 
