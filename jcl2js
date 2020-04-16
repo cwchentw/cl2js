@@ -23,8 +23,8 @@ then
   exit 0
 else
   java -jar "$root/abcl.jar" \
-     --noinform \
-     --eval "(require :abcl-contrib)" \
-     --load "$root/quicklisp/setup.lisp" \
-     --load "$root/cl2js.lisp" "$@";
+       --noinform \
+       --eval "(require :abcl-contrib)" \
+       --load "$root/quicklisp/setup.lisp" \
+       --load "$root/cl2js.lisp" "$@";
 fi
