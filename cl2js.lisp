@@ -24,17 +24,26 @@
   (prog* ((args (argument-vector))
           #+(or sbcl ccl) (args (rest args))
          )
-    (when (null (first args))
-      (perror "No input file")
-      (quit-with-status 1))
-    (with-open-file (f (first args))
-      (handler-bind
-        ((error
-           (lambda (e) 
-             (format *error-output* "~A~%" e)
-             (quit-with-status 1))))
-           ; We just disable verbose mode now.
-           (ps2js f))))
+    (if (null (first args))
+        (with-open-stream (s *standard-input*)
+          (if (not (interactive-stream-p s))
+              (handler-bind
+                ((error
+                   (lambda (e)
+                     (format *error-output* "~A~%" e)
+                     (quit-with-status 1))))
+                (ps2js s))
+              (progn
+                (perror "No input file")
+                (quit-with-status 1))))
+        (with-open-file (f (first args))
+          (handler-bind
+            ((error
+               (lambda (e)
+                 (format *error-output* "~A~%" e)
+                 (quit-with-status 1))))
+            ; We just disable verbose mode now.
+            (ps2js f)))))
   (finish-output)
   (quit-with-status))
 
