@@ -7,6 +7,23 @@ then
   exit 1;
 fi
 
+if ! [ -f quicklisp.lisp ];
+then
+  if command -v wget --version 2>/dev/null 1>&2;
+  then
+    wget -c https://beta.quicklisp.org/quicklisp.lisp
+  elif command -v curl --version 2>/dev.null 1&2;
+  then
+    curl https://beta.quicklisp.org/quicklisp.lisp --output quicklisp.lisp
+  fi
+fi
+
+if ! [ -f quicklisp.lisp ];
+then
+  echo "Failed to download quicklisp.lisp" >&2;
+  exit 1;
+fi
+
 # Locate the path of the script itself.
 root=$(dirname "$0");
 

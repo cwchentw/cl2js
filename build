@@ -1,5 +1,44 @@
 #!/bin/sh
 
+function ccl_name () {
+  if [ "Linux" = $(uname) ];
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      echo "lx86cl64";
+    else
+      echo "lx86cl";
+    fi
+  elif [ "Darwin" = $(uname) ];
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      echo "dx86cl64";
+    else
+      echo "dx86cl";
+    fi
+  elif [ "FreeBSD" = $(uname) ];  # Untested
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      echo "fx86cl64";
+    else
+      echo "fx86cl";
+    fi
+  elif [ "SunOS" = $(uname) ];  # Untested
+  then
+    if [ "x86_64" = $(uname -m) ];
+    then
+      echo "sx86cl64";
+    else
+      echo "sx86cl";
+    fi
+  else
+    echo "Unsupported platform" >&2;
+    exit 1;
+  fi
+}
+
 SBCL="sbcl"
 CCL="ccl"
 
@@ -10,6 +49,47 @@ then
   shift;
 else
   lisp="$SBCL"
+fi
+
+# Check whether SBCL is available.
+if [ "$SBCL" = "$lisp" ];
+then
+  if ! command -v sbcl --version 2>/dev/null 1>&2;
+  then
+    echo "No SBCL on the system" >&2;
+    exit 1;
+  fi
+fi
+
+# Check whether Clozure CL is available.
+if [ "$CCL" = "$lisp" ];
+then
+  compiler=$(ccl_name);
+
+  if ! command -v "$compiler" --version 2>/dev/null 1>&2;
+  then
+    echo "No Clozure CL on the system" >&2;
+    exit 1;
+  fi
+fi
+
+# Download quicklisp.lisp if it is not available.
+if ! [ -f quicklisp.lisp ];
+then
+  if command -v wget --version 2>/dev/null 1>&2;
+  then
+    wget -c https://beta.quicklisp.org/quicklisp.lisp
+  elif command -v curl --version 2>/dev.null 1&2;
+  then
+    curl https://beta.quicklisp.org/quicklisp.lisp --output quicklisp.lisp
+  fi
+fi
+
+# Check whether quicklisp.lisp is available.
+if ! [ -f quicklisp.lisp ];
+then
+  echo "Failed to download quicklisp.lisp" >&2;
+  exit 1;
 fi
 
 if [ "$SBCL" = "$lisp" ];
@@ -24,47 +104,12 @@ fi
 
 if [ "$CCL" = "$lisp" ];
 then
-  if [ "Linux" = $(uname) ];
-  then
-    if [ "x86_64" = $(uname -m) ];
-    then
-      ccl="lx86cl64";
-    else
-      ccl="lx86cl";
-    fi
-  elif [ "Darwin" = $(uname) ];
-  then
-    if [ "x86_64" = $(uname -m) ];
-    then
-      ccl="dx86cl64";
-    else
-      ccl="dx86cl";
-    fi
-  elif [ "FreeBSD" = $(uname) ];  # Untested
-  then
-    if [ "x86_64" = $(uname -m) ];
-    then
-      ccl="fx86cl64";
-    else
-      ccl="fx86cl";
-    fi
-  elif [ "SunOS" = $(uname) ];  # Untested
-  then
-    if [ "x86_64" = $(uname -m) ];
-    then
-      ccl="sx86cl64";
-    else
-      ccl="sx86cl";
-    fi
-  else
-    echo "Unsupported platform" >&2;
-    exit 1;
-  fi
+  compiler=$(ccl_name);
 
-  "$ccl" --load quicklisp.lisp \
-         --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
-         --eval "(ql:quickload \"parenscript\")" \
-         --load cl2js.lisp \
-         --eval "(compile-program \"cl2js\" #'main)"
+  "$compiler" --load quicklisp.lisp \
+              --eval "(quicklisp-quickstart:install :path \"./quicklisp\")" \
+              --eval "(ql:quickload \"parenscript\")" \
+              --load cl2js.lisp \
+              --eval "(compile-program \"cl2js\" #'main)"
   exit 0;
 fi
