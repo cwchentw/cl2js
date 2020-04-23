@@ -108,13 +108,17 @@ Later, run `jcl2js` to compile *source.lisp*:
 $ jcl2js source.lisp > output.js
 ```
 
+## Known Issues or Bugs
+
+Currently, Armed Bear CL starts too slowly to be useful as a scripting language.
+
 ## Note
 
 The version of Armed Bear CL bundled in this repo is 1.6
 
-We copy *quicklisp.lisp* [here](https://www.quicklisp.org/beta/).
+We copy *quicklisp.lisp* [here](https://www.quicklisp.org/beta/) on the fly.
 
-We copy *cl-yautils.lisp* and wrappers [here](https://github.com/cwchentw/cl-yautils).
+We copy *cl-yautils.lisp* [here](https://github.com/cwchentw/cl-yautils).
 
 ## See Also
 
