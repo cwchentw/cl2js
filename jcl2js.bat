@@ -6,6 +6,24 @@ java -version >nul 2>&1 || (
     exit /B 1
 )
 
+if exist .\quicklisp.lisp goto compile
+
+rem Check whether PowerShell is available.
+powershell -Help 2>nul 1>&2 || (
+      echo No PowerShell on the system >&2
+      exit /B 1
+)
+
+rem Download QuickLisp
+powershell -Command "Invoke-WebRequest -Uri https://beta.quicklisp.org/quicklisp.lisp -OutFile quicklisp.lisp"
+
+rem Check whether QuickLisp is available.
+if not exist .\quicklisp.lisp (
+      echo Failed to download quicklisp.lisp >&2
+      exit /B 1
+)
+
+:compile
 rem Get the root path of current batch script.
 set root=%~dp0
 

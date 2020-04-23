@@ -6,6 +6,50 @@ set CCL="ccl"
 
 set lisp=%1
 
+if %SBCL% == "%lisp%" goto check_sbcl
+if %CCL% == "%lisp%" goto check_ccl
+
+rem Fallback to SBCL
+goto check_sbcl
+
+rem Check whether SBCL is available.
+:check_sbcl
+sbcl --version 2>nul 1>&2 || (
+      echo No SBCL on the system >&2
+      exit /B 1
+)
+goto download_quicklisp
+
+:check_ccl
+rem Set the command of Clozure CL according to hardware archtecture.
+if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (set ccl=wx86cl64.exe) else (set ccl=wx86cl.exe)
+
+rem Check whether Clozure CL is available.
+%ccl% --version 2>nul 1>&2 || (
+      echo No Clozure CL on the system >&2
+      exit /B 1
+)
+goto download_quicklisp
+
+:download_quicklisp
+if exist .\quicklisp.lisp goto compile
+
+rem Check whether PowerShell is available.
+powershell -Help 2>nul 1>&2 || (
+      echo No PowerShell on the system >&2
+      exit /B 1
+)
+
+rem Download QuickLisp
+powershell -Command "Invoke-WebRequest -Uri https://beta.quicklisp.org/quicklisp.lisp -OutFile quicklisp.lisp"
+
+rem Check whether QuickLisp is available.
+if not exist .\quicklisp.lisp (
+      echo Failed to download quicklisp.lisp >&2
+      exit /B 1
+)
+
+:compile
 if %SBCL% == "%lisp%" goto compile_with_sbcl
 if %CCL% == "%lisp%" goto compile_with_ccl
 
@@ -21,9 +65,6 @@ sbcl --load quicklisp.lisp ^
 exit /B 0
 
 :compile_with_ccl
-rem Set CCL according to hardware archtecture.
-if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (set ccl=wx86cl64.exe) else (set ccl=wx86cl.exe)
-
 %ccl% --load quicklisp.lisp ^
       --eval "(quicklisp-quickstart:install :path \"quicklisp\")" ^
       --eval "(ql:quickload \"parenscript\")" ^
