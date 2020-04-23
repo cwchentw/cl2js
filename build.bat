@@ -22,10 +22,14 @@ goto download_quicklisp
 
 :check_ccl
 rem Set the command of Clozure CL according to hardware archtecture.
-if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (set ccl=wx86cl64.exe) else (set ccl=wx86cl.exe)
+if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (
+      set compiler=wx86cl64.exe
+) else (
+      set compiler=wx86cl.exe
+)
 
 rem Check whether Clozure CL is available.
-%ccl% --version 2>nul 1>&2 || (
+%compiler% --version 2>nul 1>&2 || (
       echo No Clozure CL on the system >&2
       exit /B 1
 )
@@ -65,9 +69,9 @@ sbcl --load quicklisp.lisp ^
 exit /B 0
 
 :compile_with_ccl
-%ccl% --load quicklisp.lisp ^
-      --eval "(quicklisp-quickstart:install :path \"quicklisp\")" ^
-      --eval "(ql:quickload \"parenscript\")" ^
-      --load cl2js.lisp ^
-      --eval "(compile-program \"cl2js.exe\" #'main)"
+%compiler% --load quicklisp.lisp ^
+           --eval "(quicklisp-quickstart:install :path \"quicklisp\")" ^
+           --eval "(ql:quickload \"parenscript\")" ^
+           --load cl2js.lisp ^
+           --eval "(compile-program \"cl2js.exe\" #'main)"
 exit /B 0

@@ -110,7 +110,8 @@ $ jcl2js source.lisp > output.js
 
 ## Known Issues or Bugs
 
-Currently, Armed Bear CL starts too slowly to be useful as a scripting language.
+* Armed Bear CL starts too slowly to be useful as a scripting language
+* Clozure CL compiled `cl2js` may fail to print out text on console
 
 ## Note
 
