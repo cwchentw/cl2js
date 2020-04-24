@@ -12,20 +12,27 @@ then
   exit 1;
 fi
 
+script_path="$(dirname $0)";
+root="$script_path/..";
+
 # Build `cl2js` with SBCL.
-./scripts/build
 
-CL2JS=./cl2js
+if ! [ -f "$root/cl2js" ];
+then
+  "$root/scripts/build";
+fi
 
-for script in examples/*;
+CL2JS="$root/cl2js";
+
+for script in $root/examples/*;
 do
   echo "Test $script ..."
   $CL2JS "$script" | node >/dev/null || (
     echo "Failed while testing $script with $lisp";
-    ./clean
+    "$root/scripts/clean";
     exit 1;
   )
 done
 
 # Clean local build
-./scripts/clean
+"$root/scripts/clean";
