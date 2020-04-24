@@ -21,19 +21,19 @@ Our *build* script for Unix and *build.bat* for Windows script will download and
 Compile `cl2js` with SBCL:
 
 ```
-$ ./build
+$ ./scripts/build
 ```
 
 or
 
 ```
-$ ./build sbcl
+$ ./scripts/build sbcl
 ```
 
 Alternatively, compile `cl2js` with Clozure CL:
 
 ```
-$ ./build ccl
+$ ./scripts/build ccl
 ```
 
 Copy `cl2js` to a valid path to use it.
