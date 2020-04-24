@@ -13,7 +13,7 @@ then
 fi
 
 # Build `cl2js` with SBCL.
-./build
+./scripts/build
 
 CL2JS=./cl2js
 
@@ -28,4 +28,4 @@ do
 done
 
 # Clean local build
-./clean
+./scripts/clean
