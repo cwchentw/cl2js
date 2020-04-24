@@ -1,3 +1,0 @@
-#!/bin/sh
-
-rm -rf cl2js quicklisp.lisp quicklisp

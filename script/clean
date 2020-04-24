@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cwd="$(pwd)";
+
+script_path="$(dirname $0)";
+root="${script_path}/..";
+
+cd "$root";
+
+rm -rf cl2js quicklisp.lisp quicklisp;
+
+cd "$cwd";

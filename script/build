@@ -73,6 +73,11 @@ then
   fi
 fi
 
+script_path="$(dirname $0)";
+root="$script_path/..";
+
+cd "$root";
+
 # Download quicklisp.lisp if it is not available.
 if ! [ -f quicklisp.lisp ];
 then
