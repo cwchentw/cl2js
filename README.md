@@ -43,19 +43,19 @@ Copy `cl2js` to a valid path to use it.
 Compile `cl2js.exe` with SBCL:
 
 ```
-$ .\build.bat
+$ .\scripts\build.bat
 ```
 
 or
 
 ```
-$ .\build.bat sbcl
+$ .\scripts\build.bat sbcl
 ```
 
 Alternatively, compile `cl2js.exe` with Clozure CL:
 
 ```
-$ .\build.exe ccl
+$ .\scripts\build.bat ccl
 ```
 
 Copy `cl2js.exe` to a valid path to use it.
