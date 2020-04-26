@@ -1,5 +1,12 @@
 @echo off
 
+set cwd=%CD%
+
+set script_path=%~dp0
+set rootdir=%script_path%..\
+
+cd %rootdir%
+
 rem Constant
 set SBCL="sbcl"
 set CCL="ccl"
@@ -66,6 +73,8 @@ sbcl --load quicklisp.lisp ^
      --eval "(ql:quickload \"parenscript\")" ^
      --load cl2js.lisp ^
      --eval "(compile-program \"cl2js.exe\" #'main)"
+
+cd %cwd%
 exit /B 0
 
 :compile_with_ccl
@@ -74,4 +83,6 @@ exit /B 0
            --eval "(ql:quickload \"parenscript\")" ^
            --load cl2js.lisp ^
            --eval "(compile-program \"cl2js.exe\" #'main)"
+
+cd %cwd%
 exit /B 0
