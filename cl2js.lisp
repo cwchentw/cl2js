@@ -14,7 +14,7 @@
    ((form (read f nil) (read f nil)))
    ((not form))
     (when comment
-      (format t  "/* ~A */~%" form))
+      (format t  "/* ~(~a~) */~%" form))
     (format t "~A~%" (ps:ps* form))))
 
 (defun ps2js-read (in &optional verbose)
@@ -36,17 +36,28 @@
                (lambda (e)
                  (format *error-output* "~A~%" e)
                  (quit-with-status 1))))
-            ; We just disable verbose mode now.
             (ps2js f :comment verbose)))))
 
-; Generate newer JavaScript code.
+;; Generate newer JavaScript code.
 (setq parenscript:*js-target-version* "1.8.5")
+
+;; Flag for verbose mode.
+(defvar *verbose-mode* nil)
 
 (defun main ()
   (prog* ((args (argument-vector))
           #+(or sbcl ccl) (args (rest args))
          )
-    (ps2js-read (first args)))
+    (loop
+            ;; Extract an argument.
+      (let ((arg (pop args)))
+                 ;; Enable verbose mode.
+           (cond ((or (string= arg "-v")
+                      (string= arg "--verbose"))
+                  (setq *verbose-mode* t))
+                 ;; Compile Parenscript into JavaScript.
+                 (t (ps2js-read arg *verbose-mode*)
+                    (return))))))
   (finish-output)
   (quit-with-status))
 
