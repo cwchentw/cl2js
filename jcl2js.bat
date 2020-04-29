@@ -48,5 +48,5 @@ java -jar "%root%/abcl.jar" ^
      --noinform ^
      --eval "(require :abcl-contrib)" ^
      --load "%root%quicklisp\setup.lisp" ^
-     --load "%root%cl2js.lisp" %*
+     --load "%root%cl2js.lisp" -- %*
 exit /B 0

@@ -18,47 +18,29 @@ Our *build* script for Unix and *build.bat* for Windows script will download and
 
 ### Unix
 
-Compile `cl2js` with SBCL:
-
-```
-$ ./scripts/build
-```
-
-or
-
-```
-$ ./scripts/build sbcl
-```
-
-Alternatively, compile `cl2js` with Clozure CL:
-
-```
-$ ./scripts/build ccl
-```
-
-Copy `cl2js` to a valid path to use it.
+Pending.
 
 ### Windows
 
-Compile `cl2js.exe` with SBCL:
+Compile and package `cl2js` with SBCL:
 
 ```
-$ .\scripts\build.bat
+> .\scripts\package.bat
 ```
 
 or
 
 ```
-$ .\scripts\build.bat sbcl
+> .\scripts\package.bat sbcl
 ```
 
-Alternatively, compile `cl2js.exe` with Clozure CL:
+Alternatively, compile and package `cl2js` with Clozure CL:
 
 ```
-$ .\scripts\build.bat ccl
+> .\scripts\package.bat ccl
 ```
 
-Copy `cl2js.exe` to a valid path to use it.
+Uncompress *cl2js.zip* to some path and add *path\to\cl2js\bin* to **PATH** variable. Keep the structure of *cl2js* directory intact.
 
 ### Java Platform
 

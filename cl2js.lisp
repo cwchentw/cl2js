@@ -41,22 +41,53 @@
 ;; Generate newer JavaScript code.
 (setq parenscript:*js-target-version* "1.8.5")
 
+;; Metadata.
+(defconstant +version+ "0.1.0")
+(defconstant +license+ "MIT")
+(defconstant +help+
+"Usage: cl2js [option] [path/to/source.lisp]
+
+Option:
+    --version    Show version info and exit
+    --license    Show license info and exit
+    --help       Show help info and exit
+    -h
+
+    --verbose    Enable verbose mode
+    -v")
+
 ;; Flag for verbose mode.
 (defvar *verbose-mode* nil)
 
 (defun main ()
   (prog* ((args (argument-vector))
-          #+(or sbcl ccl) (args (rest args))
+          #+(or sbcl ccl) (args (rest (rest args)))
          )
     (loop
             ;; Extract an argument.
       (let ((arg (pop args)))
+                 ;; Show version info and exit.
+           (cond ((string= arg "--version")
+                  (puts +version+)
+                  (return))
+                 ;; Show license info and exit.
+                 ((string= arg "--license")
+                  (puts +license+)
+                  (return))
+                 ;; Show help info and exit.
+                 ((or (string= arg "-h")
+                      (string= arg "--help"))
+                  (puts +help+)
+                  (return))
                  ;; Enable verbose mode.
-           (cond ((or (string= arg "-v")
+                 ((or (string= arg "-v")
                       (string= arg "--verbose"))
                   (setq *verbose-mode* t))
                  ;; Compile Parenscript into JavaScript.
-                 (t (ps2js-read arg *verbose-mode*)
+                 (t (when (and *verbose-mode* (null arg))
+                      (perror "-v means verbose mode")
+                      (quit-with-status 1))
+                    (ps2js-read arg *verbose-mode*)
                     (return))))))
   (finish-output)
   (quit-with-status))
