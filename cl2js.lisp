@@ -58,8 +58,7 @@ Option:
     -h
 
     --verbose    Enable verbose mode
-    -v
-")
+    -v")
 
 ;; Flag for verbose mode.
 (defvar *verbose-mode* nil)
