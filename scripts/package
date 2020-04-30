@@ -1,0 +1,44 @@
+#!/bin/sh
+
+script_dir="$(dirname $0)";
+
+"$script_dir/build" "$@";
+
+root_dir="$script_dir/..";
+
+cd "$root_dir" || (
+    echo "Failed to change directory to $rootdir" >&2;
+    exit 1;
+)
+
+mkdir "$root_dir/temp" || (
+    echo "Failed to make directory $root_dir/temp" >&2;
+    exit 1;
+)
+
+mkdir "$root_dir/temp/bin" || (
+    echo "Failed to make directory $root_dir/temp/bin" >&2;
+    exit 1;
+)
+
+mkdir "$root_dir/temp/libexec" || (
+    echo "Failed to make directory $root_dir/temp/libexec" >&2;
+    exit 1;
+)
+
+mv "$root_dir/cl2js" "$root_dir/temp/libexec" || (
+    echo "Failed to move $root_dir/cl2js to $root_dir/temp/libexec" >&2;
+    exit 1;
+)
+
+cp "$root_dir/scripts/cl2js" "$root_dir/temp/bin" || (
+    echo "Failed to copy $root_dir/scripts/cl2js to $root_dir/temp/bin" >&2;
+    exit 1;
+)
+
+mv "$root_dir/temp" "$root_dir/cl2js" || (
+    echo "Failed to move $root_dir/temp to $root_dir/cl2js" >&2;
+    exit 1;
+)
+
+tar -czf "$root_dir/cl2js.tar.gz" "$root_dir/cl2js"

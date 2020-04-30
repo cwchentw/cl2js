@@ -7,6 +7,6 @@ root="${script_path}/..";
 
 cd "$root";
 
-rm -rf cl2js quicklisp.lisp quicklisp;
+rm -rf cl2js cl2js.tar.gz quicklisp.lisp quicklisp;
 
 cd "$cwd";
