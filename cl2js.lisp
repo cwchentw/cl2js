@@ -27,9 +27,13 @@
                      (format *error-output* "~A~%" e)
                      (quit-with-status 1))))
                 (ps2js s :comment verbose))
-              (progn
-                (perror "No input file")
-                (quit-with-status 1))))
+              (if verbose
+                  (progn
+                    (perror "-v means verbose mode")
+                    (quit-with-status 1))
+                  (progn
+                    (perror "No input file")
+                    (quit-with-status 1)))))
         (with-open-file (f in)
           (handler-bind
             ((error
@@ -84,10 +88,7 @@ Option:
                       (string= arg "--verbose"))
                   (setq *verbose-mode* t))
                  ;; Compile Parenscript into JavaScript.
-                 (t (when (and *verbose-mode* (null arg))
-                      (perror "-v means verbose mode")
-                      (quit-with-status 1))
-                    (ps2js-read arg *verbose-mode*)
+                 (t (ps2js-read arg *verbose-mode*)
                     (return))))))
   (finish-output)
   (quit-with-status))
