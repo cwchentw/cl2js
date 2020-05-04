@@ -41,11 +41,30 @@ move "%rootdir%temp" "%rootdir%cl2js" || (
     exit /B 1
 )
 
-powershell -Command "Get-Command -Name Compress-Archive -ErrorAction SilentlyContinue" 2>nul 1>&2
-if "%ERRORLEVEL%" == "0" (
-    powershell -Command "Compress-Archive -Path %rootdir%cl2js -DestinationPath %rootdir%cl2js.zip"
-    exit /B %ERRORLEVEL%
-) else (
-    echo Compress-Archive is not supported on the system >&2
-    echo Keep %rootdir%cl2js as-is >&2
+rem Clean old state.
+set pscmd=
+
+rem Check whether PowerShell Core is available.
+pswh -Help 1>nul 2>&1 && (
+    set pscmd=pswh
 )
+
+rem Check whether PowerShell is available
+rem  when PowerShell Core is not available.
+if "%pscmd%" == "" (
+    powershell -Help 1>nul 2>&1 && (
+        set pscmd=powershell
+    ) || (
+        echo No PowerShell on the system >&2
+        exit /B 1
+    )
+)
+
+%pscmd% -Command "Get-Command -Name Compress-Archive -ErrorAction SilentlyContinue" 2>nul 1>&2
+if not "%ERRORLEVEL%" == "0" (
+    echo Compress-Archive is not supported on the system >&2
+    echo Keep %rootdir%cl2js as-is >&2   
+)
+
+%pscmd% -Command "Compress-Archive -Path %rootdir%cl2js -DestinationPath %rootdir%cl2js.zip"
+exit /B %ERRORLEVEL%

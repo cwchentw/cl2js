@@ -45,14 +45,27 @@ goto download_quicklisp
 :download_quicklisp
 if exist .\quicklisp.lisp goto compile
 
-rem Check whether PowerShell is available.
-powershell -Help 2>nul 1>&2 || (
-      echo No PowerShell on the system >&2
-      exit /B 1
+rem Clean old state.
+set pscmd=
+
+rem Check whether PowerShell Core is available.
+pswh -Help 1>nul 2>&1 && (
+    set pscmd=pswh
+)
+
+rem Check whether PowerShell is available
+rem  when PowerShell Core is not available.
+if "%pscmd%" == "" (
+    powershell -Help 1>nul 2>&1 && (
+        set pscmd=powershell
+    ) || (
+        echo No PowerShell on the system >&2
+        exit /B 1
+    )
 )
 
 rem Download QuickLisp
-powershell -Command "Invoke-WebRequest -Uri https://beta.quicklisp.org/quicklisp.lisp -OutFile quicklisp.lisp"
+%pscmd% -Command "Invoke-WebRequest -Uri https://beta.quicklisp.org/quicklisp.lisp -OutFile quicklisp.lisp"
 
 rem Check whether QuickLisp is available.
 if not exist .\quicklisp.lisp (
