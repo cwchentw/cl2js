@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function ccl_name () {
+ccl_name () {
   if [ "Linux" = $(uname) ];
   then
     if [ "x86_64" = $(uname -m) ];

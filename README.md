@@ -11,14 +11,33 @@ A utility command to convert Common Lisp to JavaScript with the power of Parensc
   * [Clozure CL](https://ccl.clozure.com/)
   * [Armed Bear CL](https://common-lisp.net/project/armedbear/)
 * [Parenscript](https://common-lisp.net/project/parenscript/)
+* [cl-yautils](https://github.com/cwchentw/cl-yautils/)
 
-Our *build* script for Unix and *build.bat* for Windows script will download and install Parenscript automatically. Hence, you don't need to manage dependency by yourself.
+Our *build* script for Unix and *build.bat* for Windows script will download and install Parenscript and cl-yautils automatically. Hence, you don't need to manage dependency by yourself.
 
 ## Build
 
 ### Unix
 
-Pending.
+Compile and package `cl2js` with SBCL:
+
+```
+$ ./scripts/package
+```
+
+or
+
+```
+$ ./scripts/package sbcl
+```
+
+Alternatively, compile and package `cl2js` with Clozure CL:
+
+```
+$ ./scripts/package ccl
+```
+
+Uncompress *cl2js.tar.gz* to some path and add *path\to\cl2js\bin* to **PATH** variable. Keep the structure of *cl2js* directory intact.
 
 ### Windows
 
@@ -44,7 +63,7 @@ Uncompress *cl2js.zip* to some path and add *path\to\cl2js\bin* to **PATH** vari
 
 ### Java Platform
 
-Alternatively, you may run `jcl2js` on Unix or `jcl2js.bat` on Windows *as-is*.
+You may also run `jcl2js` on Unix or `jcl2js.bat` on Windows *as-is*.
 
 To use `jcl2js`, add the local path of this repo to **PATH** variable.
 
@@ -99,9 +118,7 @@ $ jcl2js source.lisp > output.js
 
 The version of Armed Bear CL bundled in this repo is 1.6
 
-We copy *quicklisp.lisp* [here](https://www.quicklisp.org/beta/) on the fly.
-
-We copy *cl-yautils.lisp* [here](https://github.com/cwchentw/cl-yautils).
+We copy [quicklisp.lisp](https://www.quicklisp.org/beta/) and [cl-yautils.lisp](https://github.com/cwchentw/cl-yautils/) on the fly.
 
 ## See Also
 
