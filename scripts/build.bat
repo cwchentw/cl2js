@@ -22,23 +22,23 @@ goto check_sbcl
 rem Check whether SBCL is available.
 :check_sbcl
 sbcl --version 2>nul 1>&2 || (
-      echo No SBCL on the system >&2
-      exit /B 1
+    echo No SBCL on the system >&2
+    exit /B 1
 )
 goto download_quicklisp
 
 :check_ccl
 rem Set the command of Clozure CL according to hardware archtecture.
 if "AMD64" == "%PROCESSOR_ARCHITECTURE%" (
-      set compiler=wx86cl64.exe
+    set compiler=wx86cl64.exe
 ) else (
-      set compiler=wx86cl.exe
+    set compiler=wx86cl.exe
 )
 
 rem Check whether Clozure CL is available.
 %compiler% --version 2>nul 1>&2 || (
-      echo No Clozure CL on the system >&2
-      exit /B 1
+    echo No Clozure CL on the system >&2
+    exit /B 1
 )
 goto download_quicklisp
 
@@ -69,8 +69,17 @@ rem Download QuickLisp
 
 rem Check whether QuickLisp is available.
 if not exist .\quicklisp.lisp (
-      echo Failed to download quicklisp.lisp >&2
-      exit /B 1
+    echo Failed to download quicklisp.lisp >&2
+    exit /B 1
+)
+
+rem Download cl-yautils
+%pscmd% -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/cwchentw/cl-yautils/master/cl-yautils.lisp -OutFile cl-yautils.lisp"
+
+rem Check whether cl-yautils is available.
+if not exist .\cl-yautils.lisp (
+    echo Failed to download cl-yautils.lisp >&2
+    exit /B 1
 )
 
 :compile
