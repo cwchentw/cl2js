@@ -27,7 +27,7 @@ CL2JS="$root/cl2js";
 for script in $root/examples/*;
 do
   echo "Test $script ..."
-  $CL2JS "$script" | node >/dev/null || (
+  $CL2JS -- "$script" | node >/dev/null || (
     echo "Failed while testing $script with $lisp";
     "$root/scripts/clean";
     exit 1;
