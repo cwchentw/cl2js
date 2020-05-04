@@ -116,7 +116,7 @@ $ jcl2js source.lisp > output.js
 
 ## Note
 
-The version of Armed Bear CL bundled in this repo is 1.6
+The version of Armed Bear CL bundled in this repo is 1.6.1
 
 We copy [quicklisp.lisp](https://www.quicklisp.org/beta/) and [cl-yautils.lisp](https://github.com/cwchentw/cl-yautils/) on the fly.
 
