@@ -24,6 +24,25 @@ then
   exit 1;
 fi
 
+# Download cl-yautils.lisp if it is not available.
+if ! [ -f cl-yautils.lisp ];
+then
+  if command -v wget --version 2>/dev/null 1>&2;
+  then
+    wget -c https://raw.githubusercontent.com/cwchentw/cl-yautils/master/cl-yautils.lisp
+  elif command -v curl --version 2>/dev.null 1&2;
+  then
+    curl https://raw.githubusercontent.com/cwchentw/cl-yautils/master/cl-yautils.lisp --output cl-yautils.lisp
+  fi
+fi
+
+# Check whether cl-yautils.lisp is available.
+if ! [ -f cl-yautils.lisp ];
+then
+  echo "Failed to download cl-yautils.lisp" >&2;
+  exit 1;
+fi
+
 # Locate the path of the script itself.
 root=$(dirname "$0");
 

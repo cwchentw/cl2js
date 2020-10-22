@@ -23,6 +23,15 @@ if not exist .\quicklisp.lisp (
       exit /B 1
 )
 
+rem Download cl-yautils
+%pscmd% -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/cwchentw/cl-yautils/master/cl-yautils.lisp -OutFile cl-yautils.lisp"
+
+rem Check whether cl-yautils is available.
+if not exist .\cl-yautils.lisp (
+    echo Failed to download cl-yautils.lisp >&2
+    exit /B 1
+)
+
 :compile
 rem Get the root path of current batch script.
 set root=%~dp0
