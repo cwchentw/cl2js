@@ -1,7 +1,6 @@
 @echo off
 rem Wrapper for cl2js on Windows
-rem Copyright (c) 2020 Michael Chen
-rem Licensed under MIT
+rem Copyright (c) 2020 Michelle Chen. Licensed under MIT
 
 
 set script_dir=%~dp0

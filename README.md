@@ -126,6 +126,4 @@ We copy [quicklisp.lisp](https://www.quicklisp.org/beta/) and [cl-yautils.lisp](
 
 ## Copyright
 
-Copyright (c) 2020 Michael Chen.
-
-Licensed under MIT.
+Copyright (c) 2020 Michelle Chen. Licensed under MIT
