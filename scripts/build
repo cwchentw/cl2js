@@ -97,6 +97,25 @@ then
   exit 1;
 fi
 
+# Download cl-portable.lisp if it is not available.
+if ! [ -f cl-portable.lisp ];
+then
+  if command -v wget --version 2>/dev/null 1>&2;
+  then
+    wget -c https://raw.githubusercontent.com/cwchentw/cl-portable/master/cl-portable.lisp
+  elif command -v curl --version 2>/dev.null 1&2;
+  then
+    curl https://raw.githubusercontent.com/cwchentw/cl-portable/master/cl-portable.lisp --output cl-yautils.lisp
+  fi
+fi
+
+# Check whether cl-portable.lisp is available.
+if ! [ -f cl-portable.lisp ];
+then
+  echo "Failed to download cl-portable.lisp" >&2;
+  exit 1;
+fi
+
 # Download cl-yautils.lisp if it is not available.
 if ! [ -f cl-yautils.lisp ];
 then
