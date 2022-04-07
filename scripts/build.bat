@@ -73,6 +73,13 @@ if not exist .\quicklisp.lisp (
     exit /B 1
 )
 
+rem Download cl-portable
+%pscmd% -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/cwchentw/cl-portable/master/cl-portable.lisp -OutFile cl-portable.lisp
+if not exist .\cl-portable.lisp (
+    echo Failed to dowload cl-portable.lisp >&2
+    exit /B 1
+)
+
 rem Download cl-yautils
 %pscmd% -Command "Invoke-WebRequest -Uri https://raw.githubusercontent.com/cwchentw/cl-yautils/master/cl-yautils.lisp -OutFile cl-yautils.lisp"
 

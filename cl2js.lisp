@@ -1,11 +1,16 @@
+(load (merge-pathnames "cl-portable.lisp" *load-pathname*))
 (load (merge-pathnames "cl-yautils.lisp" *load-pathname*))
 
-(use-package :cl-yautils)
+(import 'cl-portable::argument-vector)
+(import 'cl-portable::compile-program)
+(import 'cl-portable::quit-with-status)
+(import 'cl-yautils::puterr)
+(import 'cl-yautils::puts)
 
 ; Load Parenscript if it exists.
 (handler-case (require "parenscript")
   (error ()
-    (perror "No Parenscript on the system")
+    (puterr "No Parenscript on the system")
     (quit-with-status 1)))
 
 (defun ps2js (f &key (comment nil))
@@ -29,10 +34,10 @@
                 (ps2js s :comment verbose))
               (if verbose
                   (progn
-                    (perror "-v means verbose mode")
+                    (puterr "-v means verbose mode")
                     (quit-with-status 1))
                   (progn
-                    (perror "No input file")
+                    (puterr "No input file")
                     (quit-with-status 1)))))
         (with-open-file (f in)
           (handler-bind

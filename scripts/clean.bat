@@ -7,7 +7,7 @@ set rootdir=%script_path%..\
 
 cd %rootdir%
 
-del /S /Q cl2js.exe cl2js.zip quicklisp.lisp cl-yautils.lisp
+del /S /Q cl2js.exe cl2js.zip quicklisp.lisp cl-portable.lisp cl-yautils.lisp
 rmdir /S /Q cl2js
 rmdir /S /Q quicklisp
 
